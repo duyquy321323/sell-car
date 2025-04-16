@@ -86,6 +86,7 @@
   .chat-input {
     display: flex;
     border-top: 1px solid #ddd;
+    color: #333;
   }
   
   .chat-input input {

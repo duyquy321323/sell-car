@@ -1,11 +1,13 @@
 package com.sellcar.sellcar.repository.custom;
 
 import java.sql.SQLException;
-import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.sellcar.sellcar.entity.Car;
 import com.sellcar.sellcar.request.SearchCarRequest;
 
 public interface CarRepositoryCustom {
-    public List<Car> findBySearchCarRequest(SearchCarRequest request) throws SQLException;
+    public Page<Car> findBySearchCarRequest(SearchCarRequest request, Pageable pageable) throws SQLException;
 }

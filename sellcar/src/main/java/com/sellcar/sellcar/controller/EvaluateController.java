@@ -1,5 +1,7 @@
 package com.sellcar.sellcar.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +19,8 @@ public class EvaluateController {
     private EvaluateService evaluateService;
 
     @PostMapping
-    public ResponseEntity<?> evaluateCar(@RequestParam Integer userId, @RequestParam Integer carId, @RequestParam Integer rate){
-        if(evaluateService.evaluateCar(carId, userId, rate)){
-            return ResponseEntity.ok().build();
-        } 
-        return ResponseEntity.internalServerError().build();
+    public ResponseEntity<?> evaluateCar(Principal principal, @RequestParam Integer carId, @RequestParam Integer rate){
+        evaluateService.evaluateCar(carId, principal, rate);
+        return ResponseEntity.ok().build();
     }
 }

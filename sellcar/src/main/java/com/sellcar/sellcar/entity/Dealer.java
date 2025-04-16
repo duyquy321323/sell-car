@@ -3,9 +3,8 @@ package com.sellcar.sellcar.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import javax.persistence.*;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +19,10 @@ import lombok.experimental.SuperBuilder;
 public class Dealer extends User {
     
     @Builder.Default
-    @OneToMany(mappedBy = "dealer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "dealer", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Set<Contact> contacts = new HashSet<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "author", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private Set<News> news = new HashSet<>();
 }

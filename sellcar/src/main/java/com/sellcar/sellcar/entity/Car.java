@@ -3,21 +3,10 @@ package com.sellcar.sellcar.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.*;
+
 import com.sellcar.sellcar.enumerate.ConditionCarCode;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -60,7 +49,7 @@ public class Car {
     private User user;
 
     @Builder.Default
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "car", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Set<CarImage> carImages = new HashSet<>();
 
     @ManyToMany
@@ -73,6 +62,6 @@ public class Car {
     private Set<Feature> features = new HashSet<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "car", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Set<Evaluate> evaluates = new HashSet<>();
 }

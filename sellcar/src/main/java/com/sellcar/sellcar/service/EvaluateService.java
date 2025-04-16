@@ -1,6 +1,8 @@
 package com.sellcar.sellcar.service;
 
+import java.security.Principal;
+
 public interface EvaluateService {
     
-    public Boolean evaluateCar(Integer carId, Integer userId, Integer rate);
+    public void evaluateCar(Integer carId, Principal principal, Integer rate);
 }

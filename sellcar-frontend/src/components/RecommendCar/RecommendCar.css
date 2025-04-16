@@ -27,12 +27,12 @@ line-height: normal;
 }
 
 .recommended--car .list--car{
-    display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between; /* Các phần tử cách đều nhau */
-  gap: 96px;
-  width: 100%;
-  overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Tạo lưới với cột tự động */
+    gap: 96px;
+    width: 100%;
+    /* justify-items: center; */
+    overflow: hidden;
 }
 
 .list--car .container--recommend__car{
@@ -45,9 +45,51 @@ line-height: normal;
     flex-direction: column;
     gap: 16px;
     border-radius: 3px;
-border: 2px solid var(--Secondary-Color, #12232E);
-background: var(--Dark-Secondary, #0B0C10);
+    border: 2px solid var(--Secondary-Color, #12232E);
+    width: 332px;
+    background: var(--Dark-Secondary, #0B0C10);
 }
+
+@media screen and (min-width: 1635px) and (max-width: 1920px) {
+    .recommended--car .list--car {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  
+    .recommended--car .list--car > div:nth-child(3n + 1) {
+      justify-self: start;
+    }
+  
+    .recommended--car .list--car > div:nth-child(3n + 2) {
+      justify-self: center;
+    }
+  
+    .recommended--car .list--car > div:nth-child(3n) {
+      justify-self: end;
+    }
+  }
+
+  @media screen and (max-width: 1635px) and (min-width: 1248px) {
+    .recommended--car .list--car {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .recommended--car .list--car > div:nth-child(2n + 1) {
+      justify-self: start;
+    }
+  
+    .recommended--car .list--car > div:nth-child(2n) {
+      justify-self: end;
+    }
+  }
+  @media screen and (max-width: 1248px) {
+    .recommended--car .list--car {
+      grid-template-columns: 1fr;
+    }
+  
+    .recommended--car .list--car > div:nth-child(n + 1){
+      justify-self: start;
+    }
+  }
 
 .list--car .container--recommend__car>img:first-child{
     width: 300px;

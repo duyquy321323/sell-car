@@ -4,8 +4,8 @@ import com.sellcar.sellcar.request.ContactRequest;
 
 public interface ContactService {
     
-    public Boolean sendContactHome(ContactRequest request);
+    public void sendContactHome(ContactRequest request);
 
-    public Boolean senContactDealer(ContactRequest request, Integer dealerId);
+    public void sendContactDealer(ContactRequest request, Integer dealerId);
 
 }
