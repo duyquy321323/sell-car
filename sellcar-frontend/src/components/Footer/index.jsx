@@ -7,7 +7,7 @@ import './Footer.css';
 const Footer = () => {
     return (
         <>
-            <div className="container--footer">
+            <footer className="container--footer">
                 <img src={Logo} alt={Logo}/>
                 <div className="box-content">
                     <div>
@@ -32,7 +32,7 @@ const Footer = () => {
                     </div>
                 </div>
                 <p>2021 Autohunt. All Rights reserved</p>
-            </div>
+            </footer>
         </>
     );
 }

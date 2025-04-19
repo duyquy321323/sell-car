@@ -20,7 +20,7 @@ const Header = () => {
             name: "Xe Đã Sử Dụng"
         },
         {
-            path: "/sell",
+            path: "/sell-car",
             name: "Bán Xe"
         },
         {
@@ -35,11 +35,11 @@ const Header = () => {
 
     return (
         <>
-            <div className="container--header">
+            <header className="container--header">
                     <img src={Logo} alt={Logo} onClick={() => navigate("/home")}/>
                     <div className='tab-list'>
-                        {tabList.map(it => 
-                            <div className='tab' onClick={() => navigate(it.path)}>
+                        {tabList.map((it, id) => 
+                            <div key={id} className='tab' onClick={() => navigate(it.path)}>
                                 {it.name}
                             </div>
                         )}
@@ -51,7 +51,7 @@ const Header = () => {
                     {userData? <div className='btn-sign-in' onClick={() => dispatch(logoutAction())}>
                         <p>Đăng xuất</p>
                     </div> : <></>}
-            </div>
+            </header>
         </>
     );
 }

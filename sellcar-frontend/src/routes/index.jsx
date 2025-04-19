@@ -2,13 +2,14 @@ import { useSelector } from "react-redux";
 import { Navigate, useRoutes } from "react-router-dom";
 import ChatCar from "../components/ChatCar";
 import Layout from "../layout";
+import CreateNews from "../pages/CreateNews";
 import DetailCar from "../pages/DetailCar";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import News from "../pages/News";
 import NotFound from "../pages/NotFound";
 import Register from "../pages/Register";
-import CreateNews from "../pages/CreateNews";
-import News from "../pages/News";
+import SellCar from "../pages/SellCar";
 
 const Routers = () => {
     const userData = useSelector(state => state.accountReducer);
@@ -49,6 +50,10 @@ const Routers = () => {
                 {
                     path: '/news',
                     element: <News/>
+                },
+                {
+                    path: '/sell-car',
+                    element: <SellCar/>
                 },
                 {
                     path: '*',

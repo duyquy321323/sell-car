@@ -1,15 +1,14 @@
 import { Outlet } from "react-router-dom";
-import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Chatbox from "../components/ChatCar";
+import Header from "../components/Header";
 
 const Layout = () => {
     return (
         <>
             <Header/>
-            <main>
-            <Outlet/>
-            </main>
+                <main>
+                    <Outlet/>
+                </main>
             <Footer/>
         </>
     );
