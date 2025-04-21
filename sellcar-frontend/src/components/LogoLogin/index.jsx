@@ -1,7 +1,7 @@
 import LogoBig from "../../assets/LogoBig.png";
 import Facebook from "../../assets/facebook.svg";
-import Youtube from "../../assets/youtube.svg";
 import Instagram from "../../assets/instagram.svg";
+import Youtube from "../../assets/youtube.svg";
 import "./LogoLogin.css";
 
 const LogoLogin = (props) => {

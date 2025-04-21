@@ -1,0 +1,55 @@
+.car-detail__form{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: 
+        "title title condition"
+        "year capacity ."
+        "description description description"
+    ;
+    gap: 24px 48px;
+}
+
+.car-detail__form .title{
+    grid-area: title;
+}
+.car-detail__form .condition{
+    grid-area: condition;
+}
+.car-detail__form .year{
+    grid-area: year;
+}
+.car-detail__form .capacity{
+    grid-area: capacity;
+}
+.car-detail__form .description{
+    grid-area: description;
+}
+
+@media (width <= 1024px) {
+    .car-detail__form{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+            "title title"
+            "year capacity"
+            "condition condition"
+            "description description"
+        ;
+        gap: 24px 48px;
+    }
+}
+
+@media (width <= 640px) {
+    .car-detail__form{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "title"
+            "year"
+            "capacity"
+            "condition"
+            "description"
+        ;
+        gap: 24px 48px;
+    }
+}

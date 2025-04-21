@@ -1,9 +1,8 @@
-import { Link, Rating, Tab, Tabs, Pagination } from "@mui/material";
 import { useState } from "react";
-import ScheduleIcon from "../../assets/iwwa_year.svg";
-import CapacityIcon from "../../assets/bi_people.svg";
-import "./RecommendCar.css";
 import { useNavigate } from "react-router-dom";
+import CapacityIcon from "../../assets/bi_people.svg";
+import ScheduleIcon from "../../assets/iwwa_year.svg";
+import "./RecommendCar.css";
 
 const RecommendCar = (props) => {
   const { listCar, setPage, page } = props;
