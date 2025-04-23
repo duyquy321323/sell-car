@@ -33,9 +33,6 @@ const Hero = (props) => {
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
-                    {/* <nav aria-label="breadcrumb">
-                        <p className="text-[18px] mt-[24px]">{content}</p>
-                    </nav> */}
                 </div>
             </section>
         </>

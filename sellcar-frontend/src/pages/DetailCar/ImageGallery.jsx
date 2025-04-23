@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Thumbs } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import "./ImageGallery.css";
 import "swiper/css/thumbs";
+import { Navigation, Thumbs } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 function ImageGallery(props) {
 
@@ -13,19 +12,18 @@ function ImageGallery(props) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
   
     return (
-      <div className="gallery-container">
+      <div className="w-full m-auto">
         {/* Ảnh lớn */}
         <Swiper
           modules={[Navigation, Thumbs]}
           navigation
           thumbs={{ swiper: thumbsSwiper }}
-          className="main-slider"
-          style={{ zIndex: 0 }} 
+          className="w-full z-0"
         >
           {images?.map((src, index) => (
             <SwiperSlide key={index}>
-                <div className="large-image">
-              <img src={src.imageUrl} alt={`Slide ${index}`} />
+                <div className="w-full overflow-hidden flex justify-center items-center h-[700px]">
+                    <img className="w-full h-auto object-cover z-0" src={src.imageUrl} alt={`Slide ${index}`} />
                 </div>
             </SwiperSlide>
           ))}
@@ -38,11 +36,11 @@ function ImageGallery(props) {
           spaceBetween={36}
           watchSlidesProgress
           onSwiper={setThumbsSwiper}
-          className="thumb-slider"
+          className="mt-9 px-[124px]"
         >
           {images?.map((src, index) => (
             <SwiperSlide key={index}>
-              <img src={src.imageUrl} alt={`Thumbnail ${index}`} className="thumb-image" />
+              <img src={src.imageUrl} alt={`Thumbnail ${index}`} className="w-full cursor-pointer rounded-[5px] duration-300 transition-all hover:opacity-70" />
             </SwiperSlide>
           ))}
         </Swiper>

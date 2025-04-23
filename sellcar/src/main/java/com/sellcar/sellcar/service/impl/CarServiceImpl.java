@@ -1,11 +1,8 @@
 package com.sellcar.sellcar.service.impl;
 
-import java.io.IOException;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,13 +12,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import com.sellcar.sellcar.converter.CarConverter;
 import com.sellcar.sellcar.dto.FeatureDTO;
 import com.sellcar.sellcar.entity.Car;
@@ -29,6 +25,7 @@ import com.sellcar.sellcar.entity.CarImage;
 import com.sellcar.sellcar.entity.Evaluate;
 import com.sellcar.sellcar.entity.Feature;
 import com.sellcar.sellcar.entity.User;
+import com.sellcar.sellcar.enumerate.ConditionCarCode;
 import com.sellcar.sellcar.exception.NotFoundException;
 import com.sellcar.sellcar.repository.CarImageRepository;
 import com.sellcar.sellcar.repository.CarRepository;
@@ -62,7 +59,7 @@ public class CarServiceImpl implements CarService {
     private CarRepository carRepository;
 
     @Autowired
-    private ImageComponent imageComponent ;
+    private ImageComponent imageComponent;
 
     @Autowired
     private UserRepository userRepository;
@@ -71,7 +68,7 @@ public class CarServiceImpl implements CarService {
     private EvaluateRepository evaluateRepository;
 
     @Override
-    public void sellCar(SellCarRequest request, Principal principal) {
+    public void sellCar(SellCarRequest request, Authentication authentication) {
         Car car = carConverter.sellCarRequestToCar(request); // map sang car
         Set<Feature> features = new HashSet<>(featureRepository.findByCodeIn(request.getFeatureCodes()));
 
@@ -84,20 +81,22 @@ public class CarServiceImpl implements CarService {
 
         List<String> urlImages = uploadFiles(request.getImages());
         car.getFeatures().addAll(features);
-        UserDetails userDetails = (UserDetails) principal;
-        
-        User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(() -> new NotFoundException("Tài khoản không tồn tại!!!"));
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new NotFoundException("Tài khoản không tồn tại!!!"));
         car.setUser(user);
         Car newCar = carRepository.save(car);
         List<CarImage> carImages = urlImages.stream()
-        .map(urlImage -> CarImage.builder().imageUrl(urlImage).car(newCar).build()).collect(Collectors.toList());
+                .map(urlImage -> CarImage.builder().imageUrl(urlImage).car(newCar).build())
+                .collect(Collectors.toList());
         carImages = carImageRepository.saveAll(carImages);
     }
 
     @Override
     public CarDetailResponse getCarById(Integer id) {
         Optional<Car> carOp = carRepository.findById(id);
-        if(carOp.isPresent()){
+        if (carOp.isPresent()) {
             Car car = carOp.get();
             return carConverter.carToCarDetailResponse(car);
         }
@@ -115,7 +114,7 @@ public class CarServiceImpl implements CarService {
             SearchCarResponse searchCarResponse = carConverter.carToSearchCarResponse(car);
             List<Evaluate> evaluates = evaluateRepository.findByCar_Id(car.getId()); // lấy tất cả đánh giá của xe
             Double rates = 0.0;
-            for(Evaluate evaluate : evaluates){
+            for (Evaluate evaluate : evaluates) {
                 rates += evaluate.getRate();
             }
             List<CarImage> carImages = carImageRepository.findByCar_Id(car.getId());
@@ -123,7 +122,7 @@ public class CarServiceImpl implements CarService {
             searchCarResponse.setRates(rates / evaluates.size());
 
             // lấy bức ảnh đầu tiên tìm được làm poster
-            searchCarResponse.setFirstImage(carImages.size() > 0? carImages.getFirst().getImageUrl() : "");
+            searchCarResponse.setFirstImage(carImages.size() > 0 ? carImages.getFirst().getImageUrl() : "");
             return searchCarResponse;
         }).collect(Collectors.toList());
 
@@ -142,22 +141,46 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<TrainingResponse> getTrainingData() {
-        List<SearchCarResponse> searchCarResponses = searchCar(new SearchCarRequest(), 0, -1).getContent(); // lấy tất cả xe 
+        List<SearchCarResponse> searchCarResponses = searchCar(new SearchCarRequest(), 0, -1).getContent(); // lấy tất
+                                                                                                            // cả xe
         List<TrainingResponse> trainingResponses = new ArrayList<>();
-        for(SearchCarResponse searchCarResponse : searchCarResponses){
+        for (SearchCarResponse searchCarResponse : searchCarResponses) {
             List<FeatureDTO> featureDTOs = featureRepository.findByCar_Id(searchCarResponse.getId()).stream()
-            .map(feature -> FeatureDTO.builder().code(feature.getCode()).id(feature.getId()).name(feature.getName()).build())
-            .collect(Collectors.toList());
+                    .map(feature -> FeatureDTO.builder().code(feature.getCode()).id(feature.getId())
+                            .name(feature.getName()).build())
+                    .collect(Collectors.toList());
 
-            // dữ liệu huấn luyện AI bao gồm thông tin của xe (searchCarResponse) và các tính năng của xe
+            // dữ liệu huấn luyện AI bao gồm thông tin của xe (searchCarResponse) và các
+            // tính năng của xe
             TrainingResponse trainingResponse = TrainingResponse.builder()
-            .searchCarResponse(searchCarResponse)
-            .featureDTOs(featureDTOs)
-            .build();
+                    .searchCarResponse(searchCarResponse)
+                    .featureDTOs(featureDTOs)
+                    .build();
 
             trainingResponses.add(trainingResponse);
         }
         return trainingResponses;
+    }
+
+    @Override
+    public List<SearchCarResponse> getRecommendCars(ConditionCarCode condition) {
+        Pageable pageable = PageRequest.of(0, 3);
+        List<Car> recommendCars = carRepository.findRecommendCars(condition, pageable);
+        return recommendCars.stream().map(car -> {
+            SearchCarResponse searchCarResponse = carConverter.carToSearchCarResponse(car);
+            List<Evaluate> evaluates = evaluateRepository.findByCar_Id(car.getId()); // lấy tất cả đánh giá của xe
+            Double rates = 0.0;
+            for (Evaluate evaluate : evaluates) {
+                rates += evaluate.getRate();
+            }
+            List<CarImage> carImages = carImageRepository.findByCar_Id(car.getId());
+            searchCarResponse.setQuantityEvaluate(evaluates.size());
+            searchCarResponse.setRates(rates / evaluates.size());
+
+            // lấy bức ảnh đầu tiên tìm được làm poster
+            searchCarResponse.setFirstImage(carImages.size() > 0 ? carImages.getFirst().getImageUrl() : "");
+            return searchCarResponse;
+        }).collect(Collectors.toList());
     }
 
 }

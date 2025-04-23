@@ -80,7 +80,8 @@ public class JwtFilter extends OncePerRequestFilter {
         List<Pair<String, String>> requestList = List.of(
             Pair.of("POST", "/user/register"),
             Pair.of("GET", "/api/v1/news/"),
-            Pair.of("GET", "/car/training")
+            Pair.of("POST", "/car"),
+            Pair.of("GET", "/car/")
         );
 
         String requestPath = request.getServletPath();

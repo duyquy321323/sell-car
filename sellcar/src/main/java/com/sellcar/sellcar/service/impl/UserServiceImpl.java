@@ -87,6 +87,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOp = userRepository.findByEmail(request.getEmail());
         if(userOp.isEmpty()){
             memberRepository.save(memberConverter.registerRequestToMember(request));
+            return;
         }
         throw new ExistedException("Email đã được đăng ký, vui lòng đăng nhập hoặc sử dụng email khác!!!");
     }

@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { Navigate, useRoutes } from "react-router-dom";
-import ChatCar from "../components/ChatCar";
 import Layout from "../layout";
 import CreateNews from "../pages/CreateNews";
 import DetailCar from "../pages/DetailCar";
@@ -10,6 +9,7 @@ import News from "../pages/News";
 import NotFound from "../pages/NotFound";
 import Register from "../pages/Register";
 import SellCar from "../pages/SellCar";
+import DetailNews from "../pages/DetailNews";
 
 const Routers = () => {
     const userData = useSelector(state => state.accountReducer);
@@ -24,12 +24,12 @@ const Routers = () => {
                     element: userData? <Navigate to="/home" replace /> : <Navigate to={"/login"}/>
                 },
                 {
-                    path: '/detail/:id',
+                    path: '/car/:id',
                     element: <DetailCar/>
                 },
                 {
-                    path: '/chat-car',
-                    element: <ChatCar/>
+                    path: '/news/:id',
+                    element: <DetailNews/>
                 },
                 {
                     path: '/login',

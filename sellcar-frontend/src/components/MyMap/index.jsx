@@ -1,6 +1,7 @@
 import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
 import { MapContainer, Marker, TileLayer, useMapEvents } from 'react-leaflet';
+import { toast } from 'sonner';
 
 function LocationPicker({ onSelect }) {
     useMapEvents({
@@ -26,7 +27,7 @@ export default function MyMap(props) {// Ban đầu chưa có vị trí
                 },
                 (err) => {
                     if (err.code === 1) {
-                        alert("Trình duyệt đã chặn quyền truy cập vị trí. Vui lòng cho phép lại trong cài đặt trình duyệt.");
+                        toast("Trình duyệt đã chặn quyền truy cập vị trí. Vui lòng cho phép lại trong cài đặt trình duyệt.");
                     }
                     setPosition({ lat: 10.762622, lng: 106.660172 }); // fallback
                 }
@@ -37,12 +38,12 @@ export default function MyMap(props) {// Ban đầu chưa có vị trí
     if (!position || !position?.lat) return <div>Đang lấy vị trí hiện tại...</div>;
 
     return (
-        <div className={"h-[500px] max-xl:h-96 max-lg:h-64 max-sm:h-52 w-full " + className}>
+        <div className={"h-[500px] max-xl:h-96 max-lg:h-64 max-sm:h-52 w-full" + className}>
             <MapContainer
                 center={position}
                 zoom={13}
                 scrollWheelZoom={true}
-                className="h-full w-full rounded-md"
+                className="h-full w-full rounded-md z-5"
             >
                 <TileLayer
                     attribution='&copy; OpenStreetMap'

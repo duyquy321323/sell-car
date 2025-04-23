@@ -25,19 +25,19 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
 
     // dùng để lấy người dùng từ database
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         return new UserDetailsServiceSecurity();
     }
 
     // dùng để so sánh mật khẩu và mật khẩu đã mã hóa trong database
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     // tạo provider lấy từ userdetailsservice và passwordencoder trên
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
+    public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(userDetailsService());
         auth.setPasswordEncoder(passwordEncoder());
@@ -57,29 +57,25 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JwtFilter jwtFilter(){
+    public JwtFilter jwtFilter() {
         return new JwtFilter();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
-            .cors(Customizer.withDefaults())
-            .authorizeRequests(request -> 
-                request
-                    .antMatchers(HttpMethod.GET, "/api/v1/car/training", "/api/v1/news/**")
-                    .permitAll()
-                    .antMatchers(HttpMethod.POST, "/api/v1/user/login", "/api/v1/user/register")
-                    .permitAll()
-                    .antMatchers(HttpMethod.GET, "/api/v1/car/**")
-                    .hasRole("MEMBER")
-                    .antMatchers(HttpMethod.POST, "/api/v1/car", "/api/v1/contact**", "/api/v1/evaluate")
-                    .hasRole("MEMBER")
-                    .antMatchers(HttpMethod.POST, "/api/v1/car/sell", "/api/v1/news", "/api/v1/news/url-image")
-                    .hasRole("DEALER")
-                    // .antMatchers(HttpMethod.GET, )
-                    // .hasRole("DEALER")
-            )
-            .addFilterBefore(jwtFilter(), LogoutFilter.class);
+                .cors(Customizer.withDefaults())
+                .authorizeRequests(request -> request
+                        .antMatchers(HttpMethod.GET, "/api/v1/news/**", "/api/v1/car/**")
+                        .permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/v1/user/login", "/api/v1/user/register", "/api/v1/car")
+                        .permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/v1/contact**", "/api/v1/evaluate")
+                        .hasRole("MEMBER")
+                        .antMatchers(HttpMethod.POST, "/api/v1/car/sell", "/api/v1/news", "/api/v1/news/url-image")
+                        .hasRole("DEALER")
+                        .antMatchers(HttpMethod.GET, "/api/v1/feature")
+                        .hasRole("DEALER"))
+                .addFilterBefore(jwtFilter(), LogoutFilter.class);
     }
 }

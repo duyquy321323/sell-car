@@ -1,5 +1,6 @@
 package com.sellcar.sellcar.response;
 
+import java.util.Date;
 import java.util.List;
 
 import com.sellcar.sellcar.dto.UserDTO;
@@ -22,5 +23,6 @@ public class NewsDetailResponse {
     private String description;
     private UserDTO author;
     private String content;
+    private Date createdDate;
     private List<CommentResponse> comments;
 }

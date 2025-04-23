@@ -12,91 +12,108 @@ import com.sellcar.sellcar.response.ExceptionResponse;
 
 @ControllerAdvice
 public class ExceptionHandlerCustom {
-    
+
     // ngoại lệ NOT_FOUND
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handlerNotFoundException(NotFoundException exception){
+    public ResponseEntity<ExceptionResponse> handlerNotFoundException(NotFoundException exception) {
         ExceptionResponse response = ExceptionResponse.builder()
-                                    .message(exception.getMessage())
-                                    .status(HttpStatus.NOT_FOUND)
-                                    .stackTraceElements(exception.getStackTrace())
-                                    .build();
+                .message(exception.getMessage())
+                .status(HttpStatus.NOT_FOUND)
+                .stackTraceElements(exception.getStackTrace())
+                .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     // ngoại lệ url request NOT_FOUND
     @ExceptionHandler(NoHandlerFoundException.class)
-    public ResponseEntity<ExceptionResponse> handlerNotFoundRequestException(NoHandlerFoundException exception){
+    public ResponseEntity<ExceptionResponse> handlerNotFoundRequestException(NoHandlerFoundException exception) {
         ExceptionResponse response = ExceptionResponse.builder()
-                                    .message(exception.getMessage())
-                                    .status(HttpStatus.NOT_FOUND)
-                                    .stackTraceElements(exception.getStackTrace())
-                                    .build();
+                .message(exception.getMessage())
+                .status(HttpStatus.NOT_FOUND)
+                .stackTraceElements(exception.getStackTrace())
+                .build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     // ngoại lệ SQL
     @ExceptionHandler(SQLException.class)
-    public ResponseEntity<ExceptionResponse> handlerSqlException(SQLException exception){
+    public ResponseEntity<ExceptionResponse> handlerSqlException(SQLException exception) {
         ExceptionResponse response = ExceptionResponse.builder()
-                                    .message(exception.getMessage())
-                                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                    .stackTraceElements(exception.getStackTrace())
-                                    .build();
+                .message(exception.getMessage())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .stackTraceElements(exception.getStackTrace())
+                .build();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
     // ngoại lệ chưa xác thực phân quyền
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ExceptionResponse> handlerUnauthorizedException(UnauthorizedException exception){
+    public ResponseEntity<ExceptionResponse> handlerUnauthorizedException(UnauthorizedException exception) {
         ExceptionResponse response = ExceptionResponse.builder()
-                                    .message(exception.getMessage())
-                                    .status(HttpStatus.UNAUTHORIZED)
-                                    .stackTraceElements(exception.getStackTrace())
-                                    .build();
+                .message(exception.getMessage())
+                .status(HttpStatus.UNAUTHORIZED)
+                .stackTraceElements(exception.getStackTrace())
+                .build();
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
+    // ngoại lệ đã tồn tại
+    @ExceptionHandler(ExistedException.class)
+    public ResponseEntity<ExceptionResponse> handlerExistedException(ExistedException exception) {
+        ExceptionResponse response = ExceptionResponse.builder()
+                .message(exception.getMessage())
+                .status(HttpStatus.BAD_REQUEST)
+                .stackTraceElements(exception.getStackTrace())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     // // ngoại lệ lỗi server 500
     // @ExceptionHandler(InternalServerError.class)
-    // public ResponseEntity<ExceptionResponse> handlerInternalServerException(InternalServerError exception){
-    //     ExceptionResponse response = ExceptionResponse.builder()
-    //                                 .message(exception.getMessage())
-    //                                 .status(HttpStatus.UNAUTHORIZED)
-    //                                 .stackTraceElements(exception.getStackTrace())
-    //                                 .build();
-    //     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    // public ResponseEntity<ExceptionResponse>
+    // handlerInternalServerException(InternalServerError exception){
+    // ExceptionResponse response = ExceptionResponse.builder()
+    // .message(exception.getMessage())
+    // .status(HttpStatus.UNAUTHORIZED)
+    // .stackTraceElements(exception.getStackTrace())
+    // .build();
+    // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     // }
 
     // // ngoại lệ với các dữ liệu lớn
     // @ExceptionHandler(IOException.class)
-    // public ResponseEntity<ExceptionResponse> handlerIOException(IOException exception){
-    //     ExceptionResponse response = ExceptionResponse.builder()
-    //                                 .message(exception.getMessage())
-    //                                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-    //                                 .stackTraceElements(exception.getStackTrace())
-    //                                 .build();
-    //     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    // public ResponseEntity<ExceptionResponse> handlerIOException(IOException
+    // exception){
+    // ExceptionResponse response = ExceptionResponse.builder()
+    // .message(exception.getMessage())
+    // .status(HttpStatus.INTERNAL_SERVER_ERROR)
+    // .stackTraceElements(exception.getStackTrace())
+    // .build();
+    // return
+    // ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     // }
 
-    
     // @ExceptionHandler(IllegalArgumentException.class)
-    // public ResponseEntity<ExceptionResponse> handlerIllegalArgumentException(IllegalArgumentException exception){
-    //     ExceptionResponse response = ExceptionResponse.builder()
-    //                                 .message(exception.getMessage())
-    //                                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-    //                                 .stackTraceElements(exception.getStackTrace())
-    //                                 .build();
-    //     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    // public ResponseEntity<ExceptionResponse>
+    // handlerIllegalArgumentException(IllegalArgumentException exception){
+    // ExceptionResponse response = ExceptionResponse.builder()
+    // .message(exception.getMessage())
+    // .status(HttpStatus.INTERNAL_SERVER_ERROR)
+    // .stackTraceElements(exception.getStackTrace())
+    // .build();
+    // return
+    // ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     // }
 
     // @ExceptionHandler(IllegalStateException.class)
-    // public ResponseEntity<ExceptionResponse> handlerIllegalStateException(IllegalStateException exception){
-    //     ExceptionResponse response = ExceptionResponse.builder()
-    //                                 .message(exception.getMessage())
-    //                                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-    //                                 .stackTraceElements(exception.getStackTrace())
-    //                                 .build();
-    //     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    // public ResponseEntity<ExceptionResponse>
+    // handlerIllegalStateException(IllegalStateException exception){
+    // ExceptionResponse response = ExceptionResponse.builder()
+    // .message(exception.getMessage())
+    // .status(HttpStatus.INTERNAL_SERVER_ERROR)
+    // .stackTraceElements(exception.getStackTrace())
+    // .build();
+    // return
+    // ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     // }
 }

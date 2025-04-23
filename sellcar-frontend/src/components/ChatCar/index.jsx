@@ -1,6 +1,6 @@
 import { marked } from "marked";
 import React, { useState } from "react";
-import run from "../ChatGPT";
+import run from "../ChatGemini";
 import "./Chatbox.css";
 
 const Chatbox = () => {

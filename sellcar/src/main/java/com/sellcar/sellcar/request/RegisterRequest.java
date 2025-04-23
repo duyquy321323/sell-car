@@ -9,7 +9,7 @@ public class RegisterRequest {
     private String fullName;
     @NotBlank(message = "Email không được để trống")
     private String email;
-    @NotBlank(message = "Số điện thoại không được để trống")
     private String phoneNumber;
+    @NotBlank(message = "Mật khẩu không được để trống")
     private String password;
 }

@@ -22,6 +22,7 @@ import Hero from "../../components/Hero";
 import MyMap from "../../components/MyMap";
 import NumberInput from "../../components/NumberInput";
 import "./SellCar.css";
+import { toast } from "sonner";
 
 const SellCar = () => {
 
@@ -88,7 +89,7 @@ const SellCar = () => {
                 }
             })
         } catch (e) {
-            console.error(e);
+            toast("Bán xe thất bại!");
         }
     }
 
@@ -118,7 +119,7 @@ const SellCar = () => {
                 const response = await api.get("/feature");
                 setFeatureList(response.data);
             } catch (e) {
-                console.error(e);
+                toast("Lỗi kết nối! Vui lòng thử lại sau.")
             }
         }
 
@@ -161,12 +162,12 @@ const SellCar = () => {
                                         className="flex gap-[48px] font-[14px] font-[500]"
                                     >
                                         <div className="flex items-center space-x-2">
-                                            <RadioGroupItem value="NEW" id="r1" />
-                                            <Label htmlFor="r1">Mới</Label>
+                                            <RadioGroupItem className="cursor-pointer" value="NEW" id="r1" />
+                                            <Label className="cursor-pointer" htmlFor="r1">Mới</Label>
                                         </div>
                                         <div className="flex items-center space-x-2">
-                                            <RadioGroupItem value="OLD" id="r2" />
-                                            <Label htmlFor="r2">Đã sử dụng</Label>
+                                            <RadioGroupItem className="cursor-pointer" value="OLD" id="r2" />
+                                            <Label className="cursor-pointer" htmlFor="r2">Đã sử dụng</Label>
                                         </div>
                                     </RadioGroup>
                                 }
@@ -295,7 +296,7 @@ const SellCar = () => {
                 {/* location */}
                 <section className="mt-section">
                     <h2>Vị trí</h2>
-                    <div className="mt-7">
+                    <div className="mt-7 mb-7">
                         <Label htmlFor="address" className="text-[16px]">Địa chỉ</Label>
                         <Input {...register("address")} className="all-unset bg-(--Light-Secondary) rounded-[3px] h-12 mt-2" id="address" placeholder="Địa chỉ" />
                     </div>
@@ -303,7 +304,7 @@ const SellCar = () => {
                         name="address"
                         defaultValue={address}
                         control={control}
-                        render={({ field }) => <MyMap className="mt-7" position={position} onChange={field.onChange} setPosition={setPosition} />}
+                        render={({ field }) => <MyMap position={position} onChange={field.onChange} setPosition={setPosition} />}
                     />
                 </section>
 

@@ -1,5 +1,3 @@
-import "./NumberInput.css";
-
 const NumberInput = (props) => {
     const { className, value, onChange, name } = props;
 
