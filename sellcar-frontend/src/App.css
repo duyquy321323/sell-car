@@ -131,9 +131,13 @@ input:-webkit-autofill {
   -moz-appearance: textfield; /* Firefox */
 }
 
-.swiper-thumbs .swiper-wrapper{
-    margin-left: 124px;
-    margin-right: 124px;
+@layer components {
+  .swiper-thumbs .swiper-wrapper {
+    @apply px-32 max-2xl:px-24 max-lg:px-16 max-sm:px-8;
+  }
+  .swiper-container div{
+    @apply gap-9 max-2xl:gap-7 max-lg:gap-5 max-sm:gap-3;
+  }
 }
 
 .dark {
@@ -147,11 +151,15 @@ input:-webkit-autofill {
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
-.text-description{
-    background: linear-gradient(180deg, #D7D7D7 40.07%, rgba(215, 215, 215, 0.20) 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.text-description {
+  background: linear-gradient(
+    180deg,
+    #d7d7d7 40.07%,
+    rgba(215, 215, 215, 0.2) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @theme inline {

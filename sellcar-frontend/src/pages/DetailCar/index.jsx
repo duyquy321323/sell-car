@@ -87,10 +87,10 @@ const DetailCar = () => {
     return (
         <>
             {/* phần tiêu đề (hero) */}
-            <section className="flex flex-col gap-6 px-[124px] mt-[46px] mb-[51px]">
-                <h1 className="text-5xl font-semibold">{detailCar?.title}</h1>
+            <section className="flex flex-col gap-6 px-[124px] max-2xl:px-24 max-lg:px-16 max-sm:px-8 mt-[46px] mb-[51px]">
+                <h1 className="text-5xl max-xl:text-4xl max-sm:text-3xl font-semibold">{detailCar?.title}</h1>
                 <Breadcrumb>
-                    <BreadcrumbList className="text-white text-lg font-semibold">
+                    <BreadcrumbList className="text-white text-lg max-xl:text-sm max-lg:text-xs font-semibold">
                         {breadcrumbs.slice(0, breadcrumbs.length - 1).map((breadcrumb, index) => 
                         <BreadcrumbItem key={index}>
                             <BreadcrumbLink href={breadcrumb.path}>{breadcrumb.name}</BreadcrumbLink>
@@ -109,8 +109,8 @@ const DetailCar = () => {
             <ImageGallery imageUrls={detailCar?.imageUrls}/>
 
             {/* phần nội dung chia 2 cột */}
-            <section className="mx-[124px] mb-[86px] grid grid-cols-12 mt-[72px] gap-x-[133px]">
-                <div className="col-start-1 col-end-8">
+            <section className="mx-[124px] max-2xl:mx-24 max-lg:mx-16 max-sm:mx-8 mb-[86px] grid grid-cols-12 max-2xl:gap-[72px] max-2xl:grid-cols-1 mt-[72px]">
+                <div className="2xl:col-start-1 2xl:col-end-8">
 
                     {/* phần description */}
                     <section>
@@ -135,21 +135,21 @@ const DetailCar = () => {
                     {/* phần thông tin dealer */}
                     <section className="mt-[115px]">
                         <h3 className="text-2xl text-(--Gray-3) font-bold">Thông tin của người bán</h3>
-                        <div className="mt-4 py-4 flex justify-evenly bg-(--Secondary-accent)">
-                            <div className="flex gap-4 justify-center items-center">
+                        <div className="mt-4 py-4 flex flex-wrap justify-evenly bg-(--Secondary-accent)">
+                            <div className="flex gap-4 h-[88px] justify-center items-center">
                                 <FaUserCircle size={56}/>
                                 <div>
                                     <p className="text-lg font-semibold">{detailCar?.dealerInfo.fullName}</p>
                                     <p className="text-sm font-normal">Nguời bán</p>
                                 </div>
                             </div>
-                            <div className="relative after:absolute after:content-[''] after:w-px after:h-full after:bg-white"></div>
-                            <div className="flex gap-4 justify-center items-center">
+                            <div className="relative after:absolute after:content-[''] sm:after:w-px sm:after:h-full after:bg-white"></div>
+                            <div className="flex gap-4 h-[88px] justify-center items-center">
                                 <FaPhone size={24}/>
                                 <p className="text-lg font-semibold">{detailCar?.dealerInfo.phoneNumber}</p>
                             </div>
-                            <div className="relative after:absolute after:content-[''] after:w-px after:h-full after:bg-white"></div>
-                            <div className="flex gap-4 justify-center items-center">
+                            <div className="relative after:absolute after:content-[''] sm:after:w-px sm:after:h-full after:bg-white"></div>
+                            <div className="flex gap-4 h-[88px] justify-center items-center">
                                 <IoIosMail size={24}/>
                                 <p className="text-lg font-semibold">{detailCar?.dealerInfo.email}</p>
                             </div>
@@ -160,7 +160,7 @@ const DetailCar = () => {
                     <section className="mt-[72px]">
                         <h3 className="text-2xl text-(--Gray-3) font-bold">Liên hệ với người bán</h3>
                         <form className="mt-8" onSubmit={handleSubmit(onSubmit)}>
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="grid md:grid-cols-2 gap-6">
                                 <div>
                                     <Label className="mb-2 text-base font-medium" htmlFor="name">Họ và tên</Label>
                                     <Input className="px-4 h-12 bg-(--Light-Secondary) py-[15px] text-(--Gray-2) text-[15px] rounded-[3px] all-unset font-semibold" id="name" placeholder="Nhập họ và tên" type="text" {...register("name")}/>
@@ -204,7 +204,7 @@ const DetailCar = () => {
                         </div>
                     </section>
                 </div>
-                <div className="col-start-8 col-end-13">
+                <div className="2xl:col-start-9 2xl:col-end-13">
                     <p className="text-2xl font-bold px-[61px] py-[15px] text-center text-(--Primary-Color) border rounded-[3px] border-(--Primary-Color)">{formattedNumber(detailCar?.price)}</p>
                     <div className="mt-[72px] p-6 rounded-[3px] bg-(--Secondary-accent)">
                         <h3 className="text-xl font-bold">Các thông tin chi tiết của xe</h3>

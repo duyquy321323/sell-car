@@ -18,7 +18,7 @@ const Hero = (props) => {
         <>
             <section className="h-50 max-2xl:h-40 max-lg:h-32 max-sm:h-24 bg-[#12232E] px-32 max-2xl:px-24 max-lg:px-16 max-sm:px-8 flex flex-col">
                 <div className="my-auto">
-                    <h1 className="text-5xl max-xl:text-4xl max-sm:text-3xl ">{title}</h1>
+                    <h1 className="text-5xl max-xl:text-4xl max-sm:text-3xl mb-6">{title}</h1>
                     <Breadcrumb>
                         <BreadcrumbList className="text-white">
                             {breadcrumbs.slice(0, breadcrumbs.length - 1).map((breadcrumb, index) => 

@@ -10,6 +10,7 @@ import NotFound from "../pages/NotFound";
 import Register from "../pages/Register";
 import SellCar from "../pages/SellCar";
 import DetailNews from "../pages/DetailNews";
+import SearchCar from "../pages/SearchCar";
 
 const Routers = () => {
     const userData = useSelector(state => state.accountReducer);
@@ -26,6 +27,10 @@ const Routers = () => {
                 {
                     path: '/car/:id',
                     element: <DetailCar/>
+                },
+                {
+                    path: '/search-car',
+                    element: <SearchCar/>
                 },
                 {
                     path: '/news/:id',
